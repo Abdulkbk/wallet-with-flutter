@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,14 +14,22 @@ class _HomeScreenState extends State<HomeScreen> {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Notification'),
+      bottomNavigationBar: BottomNavigationBar(items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.notifications),
+          label: 'Notification',
+        ),
       ]),
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: h * 0.01,),
+            SizedBox(
+              height: h * 0.01,
+            ),
             Container(
               // color: Colors.green,
               height: h * 0.1,
@@ -32,17 +41,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
                             'Welcome',
                             style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600
-                            ),
+                                color: Colors.grey,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w600),
                           ),
                           Text(
-                              'Abdullahi',
+                            'Abdullahi',
                             style: TextStyle(
                               color: Colors.grey[800],
                               fontSize: 30.0,
@@ -53,7 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(100.0),
-                        child: const Image(image: AssetImage('assets/img/profile.jpg'),
+                        child: const Image(
+                          image: AssetImage('assets/img/profile.jpg'),
                           width: 70.0,
                           height: 70.0,
                         ),
@@ -63,69 +73,82 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 10.0,),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 25.0),
-              width: w,
-              height: h * 0.25,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
+            const SizedBox(
+              height: 10.0,
+            ),
+            GestureDetector(
+              onTap: () => Get.toNamed('/wallet'),
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 25.0),
+                width: w,
+                height: h * 0.25,
+                decoration: BoxDecoration(
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      offset: Offset(0, 1.0),
+                      blurRadius: 2.0,
+                      spreadRadius: 2.0,
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
                       image: AssetImage('assets/img/card-bg.jpg'),
                       fit: BoxFit.cover,
-                    )
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'EST. Asset Value',
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.5),
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w600,
+                    )),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'EST. Asset Value',
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.5),
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                      Text(
+                        Text(
                           '****   ****   ****   3462',
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.7),
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w600,
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.7),
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
+                        RichText(
+                          text: TextSpan(children: [
                             const TextSpan(
                                 text: '234,456.678  ',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold,
-                              )
-                            ),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                )),
                             TextSpan(
                                 text: 'USD',
-                              style: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
-                                fontSize: 22.0,
-                                fontWeight: FontWeight.bold,
-                              )
-                            ),
-                          ]
+                                style: TextStyle(
+                                  color: Colors.white.withOpacity(0.8),
+                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ]),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 20.0,),
+            const SizedBox(
+              height: 20.0,
+            ),
             Container(
               // color: Colors.green,
               height: h * 0.1,
@@ -161,7 +184,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 10.0,),
+            const SizedBox(
+              height: 10.0,
+            ),
             Container(
               // color: Colors.green,
               margin: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -180,7 +205,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           backgroundColor: Colors.white,
                           child: Image.asset('assets/icons/bitcoin.png'),
                         ),
-                        const SizedBox(width: 20.0,),
+                        const SizedBox(
+                          width: 20.0,
+                        ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -240,7 +267,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           backgroundColor: Colors.white,
                           child: Image.asset('assets/icons/ethereum.png'),
                         ),
-                        const SizedBox(width: 20.0,),
+                        const SizedBox(
+                          width: 20.0,
+                        ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -300,7 +329,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           backgroundColor: Colors.white,
                           child: Image.asset('assets/icons/bitcoin.png'),
                         ),
-                        const SizedBox(width: 20.0,),
+                        const SizedBox(
+                          width: 20.0,
+                        ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
