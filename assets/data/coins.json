@@ -1,0 +1,14 @@
+[
+  {
+    "icon":  "bitcoin.png", "name": "Bitcoin", "balance":  1.0, "market":  390000.0,
+    "value": 2.3
+  },
+  {
+    "icon":  "ethereum.png", "name": "Ethereum", "balance":  3.6, "market":  1590000.0,
+    "value": 1.2
+  },
+  {
+    "icon":  "bitcoin.png", "name": "Bitcoin", "balance":  4.0, "market":  90580.0,
+    "value": 2.3
+  }
+]

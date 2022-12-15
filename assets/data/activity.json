@@ -1,0 +1,17 @@
+[
+  {
+    "id":  1, "activity":  [
+    {"type":  "send", "trxDate":  "12 Dec. 2022", "coin": "ETH", "amount": 0.5, "percentage": 1.6}
+  ]
+  },
+  {
+    "id":  2, "activity":  [
+    {"type":  "receive", "trxDate":  "13 Dec. 2022", "coin": "BTC", "amount": 0.01, "percentage": 10.6}
+  ]
+  },
+  {
+    "id":  2, "activity":  [
+    {"type":  "receive", "trxDate":  "13 Dec. 2022", "coin": "BTC", "amount": 0.01, "percentage": 10.6}
+  ]
+  }
+]
