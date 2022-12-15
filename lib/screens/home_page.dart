@@ -21,11 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future setUp() async {
     List cardData = await Populate.loadCards();
 
-    dynamic coinsData = await Populate.loadCoins();
-
-    // print(cardData);
-    // print(coinsData);
-    // List<Widget> t = cardData.isNotEmpty ? cardData.map((card) => );
+    List coinsData = await Populate.loadCoins();
 
     setState(() {
       cards = cardData;
@@ -57,61 +53,67 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ]),
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: h * 0.01,
-            ),
-            Container(
-              // color: Colors.green,
-              height: h * 0.1,
-              margin: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Welcome',
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          Text(
-                            'Abdullahi',
-                            style: TextStyle(
-                              color: Colors.grey[800],
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(100.0),
-                        child: const Image(
-                          image: AssetImage('assets/img/profile.jpg'),
-                          width: 70.0,
-                          height: 70.0,
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: h * 0.01,
               ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            CarouselSlider(
-                items: cards
-                    .map((card) => GestureDetector(
-                          onTap: () => Get.toNamed('/wallet'),
+              Container(
+                // color: Colors.green,
+                height: h * 0.1,
+                margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                             Text(
+                              'Welcome',
+                              style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Nunito'),
+                            ),
+                            Text(
+                              'Abdullahi',
+                              style: TextStyle(
+                                  color: Colors.grey[800],
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Nunito'),
+                            ),
+                          ],
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(100.0),
+                          child: const Image(
+                            image: AssetImage('assets/img/profile.jpg'),
+                            width: 70.0,
+                            height: 70.0,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              CarouselSlider(
+                  items: cards
+                      .map(
+                        (card) => GestureDetector(
+                          onTap: () => Get.toNamed('/wallet', arguments: {
+                            'balance': card['balance'],
+                            'random': card['random']
+                          }),
                           child: Container(
                             // margin: const EdgeInsets.symmetric(horizontal: 10.0),
                             width: w,
@@ -145,16 +147,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Text(
                                       'EST. Asset Value',
                                       style: TextStyle(
-                                          color: Colors.white.withOpacity(0.5),
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.w600),
+                                        color: Colors.white.withOpacity(0.5),
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Nunito',
+                                      ),
                                     ),
                                     Text(
                                       card['cardNo'],
                                       style: TextStyle(
-                                          color: Colors.white.withOpacity(0.7),
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.w600),
+                                        color: Colors.white.withOpacity(0.7),
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Nunito',
+                                      ),
                                     ),
                                     RichText(
                                       text: TextSpan(children: [
@@ -164,15 +170,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                             color: Colors.white,
                                             fontSize: 30.0,
                                             fontWeight: FontWeight.bold,
+                                            fontFamily: 'Nunito',
                                           ),
                                         ),
                                         TextSpan(
-                                            text: 'USD',
-                                            style: TextStyle(
-                                                color: Colors.white
-                                                    .withOpacity(0.8),
-                                                fontSize: 22.0,
-                                                fontWeight: FontWeight.bold))
+                                          text: 'USD',
+                                          style: TextStyle(
+                                            color:
+                                                Colors.white.withOpacity(0.8),
+                                            fontSize: 22.0,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Nunito',
+                                          ),
+                                        )
                                       ]),
                                     )
                                   ],
@@ -180,88 +190,91 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                        ))
-                    .toList(),
-                options: CarouselOptions(
-                    autoPlay: false,
-                    reverse: false,
-                    enlargeCenterPage: true,
-                    // aspectRatio: 2.0,
-                    onPageChanged: (index, reason) {
-                      setState(
-                        () {
-                          current = index;
-                        },
-                      );
-                    })),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: text.asMap().entries.map((entry) {
-                return GestureDetector(
-                  onTap: () => _controller.animateToPage(entry.key),
-                  child: Container(
-                    width: 12.0,
-                    height: 12.0,
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 4.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey[700]
-                          ?.withOpacity(current == entry.key ? 0.9 : 0.4),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              // color: Colors.green,
-              height: h * 0.1,
-              margin: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'Coins',
-                            style: TextStyle(
-                              color: Colors.grey[800],
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Text(
-                        'See All  >',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w600,
                         ),
+                      )
+                      .toList(),
+                  options: CarouselOptions(
+                      autoPlay: false,
+                      reverse: false,
+                      enlargeCenterPage: true,
+                      // aspectRatio: 2.0,
+                      onPageChanged: (index, reason) {
+                        setState(
+                          () {
+                            current = index;
+                          },
+                        );
+                      })),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: text.asMap().entries.map((entry) {
+                  return GestureDetector(
+                    onTap: () => _controller.animateToPage(entry.key),
+                    child: Container(
+                      width: 12.0,
+                      height: 12.0,
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 4.0),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.grey[700]
+                            ?.withOpacity(current == entry.key ? 0.9 : 0.4),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  );
+                }).toList(),
               ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Container(
-              // color: Colors.green,
-              margin: const EdgeInsets.symmetric(horizontal: 25.0),
-              width: w,
-              child: Column(
-                children: [
-                  SizedBox(
-                    // color: Colors.grey,
+              const SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                // color: Colors.green,
+                height: h * 0.1,
+                margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              'Coins',
+                              style: TextStyle(
+                                color: Colors.grey[800],
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Nunito',
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          'See All  >',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Nunito',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Container(
+                // color: Colors.green,
+                margin: const EdgeInsets.symmetric(horizontal: 25.0),
+                width: w,
+                height: h * 0.35,
+                child: ListView.builder(
+                  itemCount: coins.length,
+                  itemBuilder: (context, index) => SizedBox(
                     height: h * 0.1,
                     width: w,
                     child: Row(
@@ -271,28 +284,31 @@ class _HomeScreenState extends State<HomeScreen> {
                           radius: 30.0,
                           backgroundColor: Colors.white,
                           child: Image.asset(
-                              'assets/icons/${coins.isNotEmpty ? coins[0]['icon'] : 'ethereum.png'}'),
+                              'assets/icons/${coins[index]['icon']}'),
                         ),
                         const SizedBox(
                           width: 20.0,
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${coins.isNotEmpty ? coins[0]['name'] : 'Bit'}',
+                              coins[index]['name'],
                               style: TextStyle(
                                 color: Colors.grey[700],
                                 fontSize: 24.0,
                                 fontWeight: FontWeight.w600,
+                                fontFamily: 'Nunito',
                               ),
                             ),
                             Text(
-                              '${coins.isNotEmpty ? coins[0]['balance'] : ''} BTC',
+                              '${coins[index]['balance']} USDT',
                               style: TextStyle(
                                 color: Colors.grey[500],
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w600,
+                                fontFamily: 'Nunito',
                               ),
                             ),
                           ],
@@ -303,154 +319,94 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '\$${coins.isNotEmpty ? coins[0]['market'] : ''}',
+                              '\$${coins[index]['market']}',
                               style: TextStyle(
                                 color: Colors.grey[700],
-                                fontSize: 26.0,
                                 fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              '^ ${coins.isNotEmpty ? coins[0]['value'] : '0.0'}%',
-                              style: TextStyle(
-                                color: Colors.grey[500],
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    // color: Colors.grey,
-                    height: h * 0.1,
-                    width: w,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: 30.0,
-                          backgroundColor: Colors.white,
-                          child: Image.asset('assets/icons/ethereum.png'),
-                        ),
-                        const SizedBox(
-                          width: 20.0,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Bitcoin',
-                              style: TextStyle(
-                                color: Colors.grey[700],
                                 fontSize: 24.0,
-                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Nunito',
                               ),
                             ),
                             Text(
-                              '0.5 BTC',
+                              '^ ${coins[index]['value']}%',
                               style: TextStyle(
                                 color: Colors.grey[500],
-                                fontSize: 20.0,
                                 fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Expanded(child: Container()),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '\$820.00',
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: 26.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              '^ 1.68%',
-                              style: TextStyle(
-                                color: Colors.grey[500],
                                 fontSize: 18.0,
-                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Nunito',
                               ),
                             ),
                           ],
-                        ),
+                        )
                       ],
                     ),
                   ),
-                  SizedBox(
-                    // color: Colors.grey,
-                    height: h * 0.1,
-                    width: w,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: 30.0,
-                          backgroundColor: Colors.white,
-                          child: Image.asset('assets/icons/bitcoin.png'),
-                        ),
-                        const SizedBox(
-                          width: 20.0,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Bitcoin',
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              '0.5 BTC',
-                              style: TextStyle(
-                                color: Colors.grey[500],
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Expanded(child: Container()),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '\$70.00',
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: 26.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              '^ 1.68%',
-                              style: TextStyle(
-                                color: Colors.grey[500],
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+              // child: Column(
+              //   children: coins.map((coin) => SizedBox(
+              //     height: h * 0.1,
+              //     width: w,
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.start,
+              //       children: [
+              //         CircleAvatar(
+              //           radius: 30.0,
+              //           backgroundColor: Colors.white,
+              //           child: Image.asset('assets/icons/${coin['icon']}'),
+              //         ),
+              //         const SizedBox(width: 20.0,),
+              //         Column(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           children: [
+              //             Text(
+              //               coin['name'],
+              //               style: TextStyle(
+              //                 color: Colors.grey[700],
+              //                 fontSize: 24.0,
+              //                 fontWeight: FontWeight.w600
+              //               ),
+              //             ),
+              //             Text(
+              //               '${coin['balance']} USDT',
+              //               style: TextStyle(
+              //                   color: Colors.grey[500],
+              //                   fontSize: 20.0,
+              //                   fontWeight: FontWeight.w600
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //         Expanded(child: Container()),
+              //         Column(
+              //           crossAxisAlignment: CrossAxisAlignment.end,
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           children: [
+              //             Text(
+              //               '\$${coin['market']}',
+              //               style: TextStyle(
+              //                 color: Colors.grey[700],
+              //                 fontWeight: FontWeight.w600,
+              //                 fontSize: 24.0,
+              //               ),
+              //             ),
+              //             Text(
+              //               '^ ${coin['value']}%',
+              //               style: TextStyle(
+              //                 color: Colors.grey[500],
+              //                 fontWeight: FontWeight.w600,
+              //                 fontSize: 18.0,
+              //               ),
+              //             ),
+              //           ],
+              //         )
+              //       ],
+              //     ),
+              //   )).toList(),
+              // ),
+            ],
+          ),
         ),
       ),
     );

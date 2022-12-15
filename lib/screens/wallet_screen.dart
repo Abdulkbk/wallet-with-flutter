@@ -1,5 +1,7 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wallet_with_flutter/screens/disposable.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({Key? key}) : super(key: key);
@@ -9,8 +11,16 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
+  Map walletData = {};
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    walletData = walletData.isNotEmpty ? walletData : Get.arguments;
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -38,9 +48,11 @@ class _WalletScreenState extends State<WalletScreen> {
                     const Text(
                       'Mobile Wallet',
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 22.0,
-                          fontWeight: FontWeight.bold),
+                        color: Colors.black,
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Nunito',
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.only(right: 8.0),
@@ -56,26 +68,31 @@ class _WalletScreenState extends State<WalletScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Column(
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           'TOTAL AMOUNT',
                           style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w600),
+                            color: Colors.grey,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Nunito',
+                          ),
                         ),
                         Text(
-                          '\$62,897.00',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 36.0),
+                          '\$${walletData['balance']}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 36.0,
+                            fontFamily: 'Nunito',
+                          ),
                         ),
                         Text(
-                          '^ +\$12,987.00(2.42%)',
-                          style: TextStyle(
+                          '^ +\$${walletData['random']}(2.42%)',
+                          style: const TextStyle(
                             color: Colors.green,
                             fontSize: 18.0,
+                            fontFamily: 'Nunito',
                           ),
                         ),
                       ],
@@ -93,7 +110,10 @@ class _WalletScreenState extends State<WalletScreen> {
                           child: const Text(
                             '1h',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.0),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                              fontFamily: 'Nunito',
+                            ),
                           ),
                         ),
                         Container(
@@ -106,7 +126,10 @@ class _WalletScreenState extends State<WalletScreen> {
                           child: const Text(
                             '24h',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.0),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                              fontFamily: 'Nunito',
+                            ),
                           ),
                         ),
                         Container(
@@ -119,7 +142,10 @@ class _WalletScreenState extends State<WalletScreen> {
                           child: const Text(
                             '7d',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.0),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                              fontFamily: 'Nunito',
+                            ),
                           ),
                         ),
                         Container(
@@ -132,7 +158,10 @@ class _WalletScreenState extends State<WalletScreen> {
                           child: const Text(
                             '30d',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.0),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                              fontFamily: 'Nunito',
+                            ),
                           ),
                         ),
                         Container(
@@ -145,7 +174,10 @@ class _WalletScreenState extends State<WalletScreen> {
                           child: const Text(
                             '1y',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.0),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                              fontFamily: 'Nunito',
+                            ),
                           ),
                         ),
                         Container(
@@ -158,7 +190,10 @@ class _WalletScreenState extends State<WalletScreen> {
                           child: const Text(
                             'All',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.0),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.0,
+                              fontFamily: 'Nunito',
+                            ),
                           ),
                         ),
                       ],
@@ -173,12 +208,12 @@ class _WalletScreenState extends State<WalletScreen> {
                 margin: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Column(
                   children: [
-                    Container(
-                      color: Colors.blueAccent.withOpacity(0.5),
+                    SizedBox(
+                      // color: Colors.blueAccent.withOpacity(0.5),
                       height: h * 0.25,
                       width: w,
                       child: const Center(
-                        child: Text('CHART HERE'),
+                        child: LineChartSample2(),
                       ),
                     ),
                     Row(
@@ -195,12 +230,13 @@ class _WalletScreenState extends State<WalletScreen> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15.0)),
                             ),
-                            child: const Text(
-                              'SELL',
+                            child: Text(
+                              'BUY',
                               style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18.0,
+                                color: Colors.grey[900],
+                                fontSize: 20.0,
                                 fontWeight: FontWeight.w600,
+                                fontFamily: 'Nunito',
                               ),
                             ),
                           ),
@@ -220,8 +256,9 @@ class _WalletScreenState extends State<WalletScreen> {
                               'SELL',
                               style: TextStyle(
                                 color: Colors.white70,
-                                fontSize: 18.0,
+                                fontSize: 20.0,
                                 fontWeight: FontWeight.w600,
+                                fontFamily: 'Nunito',
                               ),
                             ),
                           ),
@@ -236,12 +273,14 @@ class _WalletScreenState extends State<WalletScreen> {
                 width: w,
                 height: h * 0.24,
                 child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       'Activity',
                       style: TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.w600,
+                        fontFamily: 'Nunito',
                       ),
                     ),
                     const SizedBox(
@@ -283,6 +322,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                         color: Colors.grey[700],
                                         fontSize: 24.0,
                                         fontWeight: FontWeight.w600,
+                                        fontFamily: 'Nunito',
                                       ),
                                     ),
                                     Text(
@@ -291,6 +331,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                         color: Colors.grey[400],
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.w600,
+                                        fontFamily: 'Nunito',
                                       ),
                                     ),
                                   ],
@@ -306,6 +347,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                         color: Colors.green[500],
                                         fontSize: 20.0,
                                         fontWeight: FontWeight.bold,
+                                        fontFamily: 'Nunito',
                                       ),
                                     ),
                                     Text(
@@ -314,6 +356,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                         color: Colors.grey[500],
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.w600,
+                                        fontFamily: 'Nunito',
                                       ),
                                     ),
                                   ],
@@ -348,11 +391,12 @@ class _WalletScreenState extends State<WalletScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Received',
+                                      'Send',
                                       style: TextStyle(
                                         color: Colors.grey[700],
                                         fontSize: 24.0,
                                         fontWeight: FontWeight.w600,
+                                        fontFamily: 'Nunito',
                                       ),
                                     ),
                                     Text(
@@ -361,6 +405,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                         color: Colors.grey[400],
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.w600,
+                                        fontFamily: 'Nunito',
                                       ),
                                     ),
                                   ],
@@ -376,6 +421,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                         color: Colors.red[500],
                                         fontSize: 20.0,
                                         fontWeight: FontWeight.bold,
+                                        fontFamily: 'Nunito',
                                       ),
                                     ),
                                     Text(
@@ -384,6 +430,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                         color: Colors.red[500],
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.w600,
+                                        fontFamily: 'Nunito',
                                       ),
                                     ),
                                   ],
